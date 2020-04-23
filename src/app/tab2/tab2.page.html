@@ -1,0 +1,72 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="dark"  class="ion-text-center">
+    <ion-title >
+      <ion-icon class="iconeFone" name="headset-outline"></ion-icon>
+      <ion-text class="logoText">KmPlayer</ion-text>
+      <ion-icon class="iconeFone" name="headset-outline"></ion-icon>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true">
+
+<ion-list>
+  <ion-item button  *ngFor="let track of playlist"  (click)="start(track)" > 
+  <ion-label [color]="track == activeTrack ? 'success': 'light' ">
+    <ion-row class="linha">  
+      <ion-avatar class="padding">
+      <img src={{track.img}}/>
+    </ion-avatar>
+     {{track.name}}
+    </ion-row>  
+    </ion-label>
+  </ion-item>
+</ion-list>
+</ion-content>
+
+<ion-footer *ngIf="activeTrack">
+
+  <ion-toolbar class="ion-text-center" color="dark"> 
+
+    <ion-row>
+      <ion-col size="12" class="ion-text-center">
+        <ion-row>
+          <ion-col size="12">
+            {{activeTrack.name}}
+          </ion-col>          
+          </ion-row>      
+        <br/>
+        <ion-row>
+          <ion-col class="col">
+            <ion-avatar>
+              <img class="avatar" src={{activeTrack.img}}/>
+            </ion-avatar>
+          </ion-col>   
+      </ion-row>
+      </ion-col> 
+
+      <ion-col size=12>
+        <ion-range #range [(ngModel)]="progress" max="100" color="success" (touchend)="seek()" (mouseup)="seek()"></ion-range>
+      </ion-col>
+
+      <ion-col size="12" class="ion-text-center">
+
+        <ion-button fill="clear" (click)="prev()" color="light">
+          <ion-icon name="play-skip-back-circle"></ion-icon>
+        </ion-button>
+
+        <ion-button fill="clear" (click)="togglePlayer(false)" *ngIf="!isPlaying" color="light">
+          <ion-icon name="play-circle"></ion-icon>
+        </ion-button>
+
+        <ion-button fill="clear" (click)="togglePlayer(true)" *ngIf="isPlaying" color="light">
+          <ion-icon name="pause-circle-outline"></ion-icon>
+        </ion-button>
+
+        <ion-button fill="clear" (click)="next()" color="light">
+          <ion-icon name="play-skip-forward-circle"></ion-icon>
+        </ion-button>
+
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-footer>
